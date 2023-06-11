@@ -300,3 +300,70 @@ class Model6(BaseModel):
         x = self.cblock3(x)
         x = self.oblock(x)
         return x
+
+
+class Model7(BaseModel):
+    def __init__(self):
+        super(Model7, self).__init__()
+        DROP = 0.02
+        self.cblock1 = nn.Sequential(
+            nn.Conv2d(1, 6, 3, padding=1, bias=False),
+            nn.Dropout(DROP),
+            nn.ReLU(),
+            nn.BatchNorm2d(6),
+            nn.Conv2d(6, 8, 3, padding=1, bias=False),
+            nn.Dropout(DROP),
+            nn.ReLU(),
+        )
+
+        self.tblock1 = nn.Sequential(
+            nn.BatchNorm2d(8), nn.Conv2d(8, 6, 1), nn.ReLU(), nn.MaxPool2d(2, 2)
+        )
+
+        self.cblock2 = nn.Sequential(
+            nn.BatchNorm2d(6),
+            nn.Conv2d(6, 8, 3, padding=1, bias=False),
+            nn.Dropout(DROP),
+            nn.ReLU(),
+            nn.BatchNorm2d(8),
+            nn.Conv2d(8, 16, 3, padding=1, bias=False),
+            nn.Dropout(DROP),
+            nn.ReLU(),
+        )
+
+        self.tblock2 = nn.Sequential(
+            nn.BatchNorm2d(16), nn.Conv2d(16, 8, 1), nn.ReLU(), nn.MaxPool2d(2, 2)
+        )
+
+        self.cblock3 = nn.Sequential(
+            nn.BatchNorm2d(8),
+            nn.Conv2d(8, 16, 3, padding=1, bias=False),
+            nn.Dropout(DROP),
+            nn.ReLU(),
+            nn.BatchNorm2d(16),
+            nn.Conv2d(16, 24, 3, padding=1, bias=False),
+            nn.Dropout(DROP),
+            nn.ReLU(),
+        )
+
+        self.oblock = nn.Sequential(
+            nn.BatchNorm2d(24),
+            nn.Conv2d(24, 24, 1),
+            nn.Dropout(DROP),
+            nn.ReLU(),
+            nn.BatchNorm2d(24),
+            nn.Conv2d(24, 10, 1),
+            nn.ReLU(),
+            nn.AdaptiveAvgPool2d(1),
+            nn.Flatten(),
+            nn.LogSoftmax(-1),
+        )
+
+    def forward(self, x):
+        x = self.cblock1(x)
+        x = self.tblock1(x)
+        x = self.cblock2(x)
+        x = self.tblock2(x)
+        x = self.cblock3(x)
+        x = self.oblock(x)
+        return x
