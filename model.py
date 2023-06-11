@@ -121,3 +121,58 @@ class Model3(BaseModel):
         x = self.cblock3(x)
         x = self.oblock(x)
         return x
+
+
+class Model4(BaseModel):
+    def __init__(self):
+        super(Model4, self).__init__()
+        self.cblock1 = nn.Sequential(
+            nn.Conv2d(1, 4, 3, padding=1, bias=False),
+            nn.ReLU(),
+            nn.BatchNorm2d(4),
+            nn.Conv2d(4, 8, 3, padding=1, bias=False),
+            nn.ReLU(),
+        )
+
+        self.tblock1 = nn.Sequential(
+            nn.BatchNorm2d(8), nn.Conv2d(8, 4, 1), nn.MaxPool2d(2, 2)
+        )
+
+        self.cblock2 = nn.Sequential(
+            nn.BatchNorm2d(4),
+            nn.Conv2d(4, 8, 3, padding=1, bias=False),
+            nn.ReLU(),
+            nn.BatchNorm2d(8),
+            nn.Conv2d(8, 12, 3, padding=1, bias=False),
+            nn.ReLU(),
+        )
+
+        self.tblock2 = nn.Sequential(
+            nn.BatchNorm2d(12), nn.Conv2d(12, 8, 1), nn.MaxPool2d(2, 2)
+        )
+
+        self.cblock3 = nn.Sequential(
+            nn.BatchNorm2d(8),
+            nn.Conv2d(8, 12, 3, padding=1, bias=False),
+            nn.ReLU(),
+            nn.BatchNorm2d(12),
+            nn.Conv2d(12, 16, 3, padding=1, bias=False),
+            nn.ReLU(),
+        )
+
+        self.oblock = nn.Sequential(
+            nn.BatchNorm2d(16),
+            nn.Conv2d(16, 10, 1),
+            nn.Conv2d(10, 10, 7, 7),
+            nn.Flatten(),
+            nn.LogSoftmax(-1),
+        )
+
+    def forward(self, x):
+        x = self.cblock1(x)
+        x = self.tblock1(x)
+        x = self.cblock2(x)
+        x = self.tblock2(x)
+        x = self.cblock3(x)
+        x = self.oblock(x)
+        return x
