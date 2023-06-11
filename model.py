@@ -43,9 +43,7 @@ class Model2(BaseModel):
             nn.ReLU(),
         )
 
-        self.tblock1 = nn.Sequential(
-            nn.Conv2d(64, 32, 1, bias=False), nn.MaxPool2d(2, 2)
-        )
+        self.tblock1 = nn.Sequential(nn.Conv2d(64, 32, 1), nn.MaxPool2d(2, 2))
 
         self.cblock2 = nn.Sequential(
             nn.Conv2d(32, 64, 3, padding=1, bias=False),
@@ -54,9 +52,7 @@ class Model2(BaseModel):
             nn.ReLU(),
         )
 
-        self.tblock2 = nn.Sequential(
-            nn.Conv2d(128, 64, 1, bias=False), nn.MaxPool2d(2, 2)
-        )
+        self.tblock2 = nn.Sequential(nn.Conv2d(128, 64, 1), nn.MaxPool2d(2, 2))
 
         self.cblock3 = nn.Sequential(
             nn.Conv2d(64, 128, 3, padding=1, bias=False),
