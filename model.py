@@ -8,7 +8,7 @@ class BaseModel(nn.Module):
         return torchinfo.summary(
             self,
             input_size=input_size,
-            col_names=["input_size", "output_size", "num_params", "params_percent"],
+            col_names=["output_size", "num_params", "params_percent"],
         )
 
 
