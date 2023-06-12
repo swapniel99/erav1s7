@@ -33,7 +33,7 @@
     - Test Accuracy = 98.96
 ### Analysis:
     - Simple model gradually increasing channels to 32.
-    - Overfitting reduced significantly.
+    - Overfitting reduced significantly. Even though test accuracy is less than train accuracy they are not diverging.
 
 ## Model 4:
 ### Target:
@@ -43,7 +43,7 @@
     - Train Accuracy = 99.34
     - Test Accuracy = 99.24
 ### Analysis:
-    - Model has started overfitting again slightly.
+    - Model has started overfitting again slightly as train and text accuracies are diverging.
 
 ## Model 5:
 ### Target:
@@ -53,7 +53,7 @@
     - Train Accuracy = 99.23
     - Test Accuracy = 99.26
 ### Analysis:
-    - No longer overfitting. Infact it is slighly underfitting now.
+    - No longer overfitting. Infact it's the opposite.
 
 ## Model 6:
 ### Target:
@@ -64,7 +64,7 @@
     - Test Accuracy = 99.53
 ### Analysis:
     - Crossed 99.4 for first time and test loss is fluctuating.
-    - Time to add an LR scheduler.
+    - Time to add an LR scheduler to stabilise test loss.
 
 ## Model 7:
 ### Target:
