@@ -55,14 +55,12 @@ class Model2(BaseModel):
         self.tblock2 = nn.Sequential(nn.MaxPool2d(2, 2))
 
         self.cblock3 = nn.Sequential(
-            nn.Conv2d(64, 128, 3, padding=1, bias=False),
-            nn.ReLU(),
-            nn.Conv2d(128, 128, 3, padding=1, bias=False),
-            nn.ReLU(),
+            nn.Conv2d(64, 128, 3, padding=1, bias=False), nn.ReLU()
         )
 
         self.oblock = nn.Sequential(
-            nn.Conv2d(128, 10, 1),
+            nn.Conv2d(128, 256, 1),
+            nn.Conv2d(256, 10, 1),
             nn.Conv2d(10, 10, 7, 7),
             nn.Flatten(),
             nn.LogSoftmax(-1),
