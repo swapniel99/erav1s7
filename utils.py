@@ -100,6 +100,8 @@ def test(model, device, test_loader, criterion):
         )
     )
 
+    return test_loss
+
 
 def plot_stats():
     fig, axs = plt.subplots(2, 2, figsize=(15, 10))
