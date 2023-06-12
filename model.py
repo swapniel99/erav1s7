@@ -60,7 +60,9 @@ class Model2(BaseModel):
 
         self.oblock = nn.Sequential(
             nn.Conv2d(128, 256, 1),
+            nn.ReLU(),
             nn.Conv2d(256, 10, 1),
+            nn.ReLU(),
             nn.Conv2d(10, 10, 7, 7),
             nn.Flatten(),
             nn.LogSoftmax(-1),
