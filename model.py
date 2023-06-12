@@ -80,32 +80,31 @@ class Model3(BaseModel):
     def __init__(self):
         super(Model3, self).__init__()
         self.cblock1 = nn.Sequential(
-            nn.Conv2d(1, 4, 3, padding=1, bias=False),
+            nn.Conv2d(1, 8, 3, padding=1, bias=False),
             nn.ReLU(),
-            nn.Conv2d(4, 8, 3, padding=1, bias=False),
+            nn.Conv2d(8, 8, 3, padding=1, bias=False),
             nn.ReLU(),
         )
 
-        self.tblock1 = nn.Sequential(nn.Conv2d(8, 4, 1), nn.MaxPool2d(2, 2))
+        self.tblock1 = nn.Sequential(nn.MaxPool2d(2, 2))
 
         self.cblock2 = nn.Sequential(
-            nn.Conv2d(4, 8, 3, padding=1, bias=False),
-            nn.ReLU(),
             nn.Conv2d(8, 12, 3, padding=1, bias=False),
+            nn.ReLU(),
+            nn.Conv2d(12, 12, 3, padding=1, bias=False),
             nn.ReLU(),
         )
 
-        self.tblock2 = nn.Sequential(nn.Conv2d(12, 8, 1), nn.MaxPool2d(2, 2))
+        self.tblock2 = nn.Sequential(nn.MaxPool2d(2, 2))
 
         self.cblock3 = nn.Sequential(
-            nn.Conv2d(8, 12, 3, padding=1, bias=False),
-            nn.ReLU(),
             nn.Conv2d(12, 16, 3, padding=1, bias=False),
             nn.ReLU(),
         )
 
         self.oblock = nn.Sequential(
-            nn.Conv2d(16, 10, 1),
+            nn.Conv2d(16, 32, 1),
+            nn.Conv2d(32, 10, 1),
             nn.Conv2d(10, 10, 7, 7),
             nn.Flatten(),
             nn.LogSoftmax(-1),
