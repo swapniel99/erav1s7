@@ -55,15 +55,15 @@ class Model2(BaseModel):
         self.tblock2 = nn.Sequential(nn.MaxPool2d(2, 2))
 
         self.cblock3 = nn.Sequential(
-            nn.Conv2d(64, 128, 3, padding=1, bias=False), nn.ReLU()
+            nn.Conv2d(64, 128, 3, padding=1, bias=False),
+            nn.ReLU(),
         )
 
         self.oblock = nn.Sequential(
-            nn.Conv2d(128, 256, 1),
+            nn.AdaptiveAvgPool2d(1),
+            nn.Conv2d(128, 256, 1, bias=False),
             nn.ReLU(),
             nn.Conv2d(256, 10, 1),
-            nn.ReLU(),
-            nn.Conv2d(10, 10, 7, 7),
             nn.Flatten(),
             nn.LogSoftmax(-1),
         )
@@ -82,32 +82,33 @@ class Model3(BaseModel):
     def __init__(self):
         super(Model3, self).__init__()
         self.cblock1 = nn.Sequential(
-            nn.Conv2d(1, 8, 3, padding=1, bias=False),
+            nn.Conv2d(1, 9, 3, padding=1, bias=False),
             nn.ReLU(),
-            nn.Conv2d(8, 8, 3, padding=1, bias=False),
+            nn.Conv2d(9, 10, 3, padding=1, bias=False),
             nn.ReLU(),
         )
 
         self.tblock1 = nn.Sequential(nn.MaxPool2d(2, 2))
 
         self.cblock2 = nn.Sequential(
-            nn.Conv2d(8, 12, 3, padding=1, bias=False),
+            nn.Conv2d(10, 16, 3, padding=1, bias=False),
             nn.ReLU(),
-            nn.Conv2d(12, 12, 3, padding=1, bias=False),
+            nn.Conv2d(16, 16, 3, padding=1, bias=False),
             nn.ReLU(),
         )
 
         self.tblock2 = nn.Sequential(nn.MaxPool2d(2, 2))
 
         self.cblock3 = nn.Sequential(
-            nn.Conv2d(12, 16, 3, padding=1, bias=False),
+            nn.Conv2d(16, 16, 3, padding=1, bias=False),
             nn.ReLU(),
         )
 
         self.oblock = nn.Sequential(
-            nn.Conv2d(16, 32, 1),
+            nn.AdaptiveAvgPool2d(1),
+            nn.Conv2d(16, 32, 1, bias=False),
+            nn.ReLU(),
             nn.Conv2d(32, 10, 1),
-            nn.Conv2d(10, 10, 7, 7),
             nn.Flatten(),
             nn.LogSoftmax(-1),
         )
@@ -126,43 +127,39 @@ class Model4(BaseModel):
     def __init__(self):
         super(Model4, self).__init__()
         self.cblock1 = nn.Sequential(
-            nn.Conv2d(1, 4, 3, padding=1, bias=False),
+            nn.Conv2d(1, 9, 3, padding=1, bias=False),
             nn.ReLU(),
-            nn.BatchNorm2d(4),
-            nn.Conv2d(4, 8, 3, padding=1, bias=False),
+            nn.BatchNorm2d(9),
+            nn.Conv2d(9, 10, 3, padding=1, bias=False),
             nn.ReLU(),
         )
 
-        self.tblock1 = nn.Sequential(
-            nn.BatchNorm2d(8), nn.Conv2d(8, 4, 1), nn.MaxPool2d(2, 2)
-        )
+        self.tblock1 = nn.Sequential(nn.MaxPool2d(2, 2))
 
         self.cblock2 = nn.Sequential(
-            nn.BatchNorm2d(4),
-            nn.Conv2d(4, 8, 3, padding=1, bias=False),
+            nn.BatchNorm2d(10),
+            nn.Conv2d(10, 16, 3, padding=1, bias=False),
             nn.ReLU(),
-            nn.BatchNorm2d(8),
-            nn.Conv2d(8, 12, 3, padding=1, bias=False),
+            nn.BatchNorm2d(16),
+            nn.Conv2d(16, 16, 3, padding=1, bias=False),
             nn.ReLU(),
         )
 
-        self.tblock2 = nn.Sequential(
-            nn.BatchNorm2d(12), nn.Conv2d(12, 8, 1), nn.MaxPool2d(2, 2)
-        )
+        self.tblock2 = nn.Sequential(nn.MaxPool2d(2, 2))
 
         self.cblock3 = nn.Sequential(
-            nn.BatchNorm2d(8),
-            nn.Conv2d(8, 12, 3, padding=1, bias=False),
-            nn.ReLU(),
-            nn.BatchNorm2d(12),
-            nn.Conv2d(12, 16, 3, padding=1, bias=False),
+            nn.BatchNorm2d(16),
+            nn.Conv2d(16, 16, 3, padding=1, bias=False),
             nn.ReLU(),
         )
 
         self.oblock = nn.Sequential(
+            nn.AdaptiveAvgPool2d(1),
             nn.BatchNorm2d(16),
-            nn.Conv2d(16, 10, 1),
-            nn.Conv2d(10, 10, 7, 7),
+            nn.Conv2d(16, 32, 1, bias=False),
+            nn.ReLU(),
+            nn.BatchNorm2d(32),
+            nn.Conv2d(32, 10, 1),
             nn.Flatten(),
             nn.LogSoftmax(-1),
         )
@@ -179,181 +176,48 @@ class Model4(BaseModel):
 
 class Model5(BaseModel):
     def __init__(self):
+        DROP = 0.01
         super(Model5, self).__init__()
-        DROP = 0.05
         self.cblock1 = nn.Sequential(
-            nn.Conv2d(1, 4, 3, padding=1, bias=False),
+            nn.Conv2d(1, 9, 3, padding=1, bias=False),
             nn.Dropout(DROP),
             nn.ReLU(),
-            nn.BatchNorm2d(4),
-            nn.Conv2d(4, 8, 3, padding=1, bias=False),
+            nn.BatchNorm2d(9),
+            nn.Conv2d(9, 10, 3, padding=1, bias=False),
             nn.Dropout(DROP),
             nn.ReLU(),
         )
 
-        self.tblock1 = nn.Sequential(
-            nn.BatchNorm2d(8), nn.Conv2d(8, 4, 1), nn.MaxPool2d(2, 2)
-        )
+        self.tblock1 = nn.Sequential(nn.MaxPool2d(2, 2))
 
         self.cblock2 = nn.Sequential(
-            nn.BatchNorm2d(4),
-            nn.Conv2d(4, 8, 3, padding=1, bias=False),
-            nn.Dropout(DROP),
-            nn.ReLU(),
-            nn.BatchNorm2d(8),
-            nn.Conv2d(8, 12, 3, padding=1, bias=False),
-            nn.Dropout(DROP),
-            nn.ReLU(),
-        )
-
-        self.tblock2 = nn.Sequential(
-            nn.BatchNorm2d(12), nn.Conv2d(12, 8, 1), nn.MaxPool2d(2, 2)
-        )
-
-        self.cblock3 = nn.Sequential(
-            nn.BatchNorm2d(8),
-            nn.Conv2d(8, 12, 3, padding=1, bias=False),
-            nn.Dropout(DROP),
-            nn.ReLU(),
-            nn.BatchNorm2d(12),
-            nn.Conv2d(12, 16, 3, padding=1, bias=False),
-            nn.Dropout(DROP),
-            nn.ReLU(),
-        )
-
-        self.oblock = nn.Sequential(
-            nn.BatchNorm2d(16),
-            nn.Conv2d(16, 10, 1),
-            nn.Conv2d(10, 10, 7, 7),
-            nn.Flatten(),
-            nn.LogSoftmax(-1),
-        )
-
-    def forward(self, x):
-        x = self.cblock1(x)
-        x = self.tblock1(x)
-        x = self.cblock2(x)
-        x = self.tblock2(x)
-        x = self.cblock3(x)
-        x = self.oblock(x)
-        return x
-
-
-class Model6(BaseModel):
-    def __init__(self):
-        super(Model6, self).__init__()
-        DROP = 0.05
-        self.cblock1 = nn.Sequential(
-            nn.Conv2d(1, 4, 3, padding=1, bias=False),
-            nn.Dropout(DROP),
-            nn.ReLU(),
-            nn.BatchNorm2d(4),
-            nn.Conv2d(4, 8, 3, padding=1, bias=False),
-            nn.Dropout(DROP),
-            nn.ReLU(),
-        )
-
-        self.tblock1 = nn.Sequential(
-            nn.BatchNorm2d(8), nn.Conv2d(8, 4, 1), nn.MaxPool2d(2, 2)
-        )
-
-        self.cblock2 = nn.Sequential(
-            nn.BatchNorm2d(4),
-            nn.Conv2d(4, 8, 3, padding=1, bias=False),
-            nn.Dropout(DROP),
-            nn.ReLU(),
-            nn.BatchNorm2d(8),
-            nn.Conv2d(8, 12, 3, padding=1, bias=False),
-            nn.Dropout(DROP),
-            nn.ReLU(),
-        )
-
-        self.tblock2 = nn.Sequential(
-            nn.BatchNorm2d(12), nn.Conv2d(12, 8, 1), nn.MaxPool2d(2, 2)
-        )
-
-        self.cblock3 = nn.Sequential(
-            nn.BatchNorm2d(8),
-            nn.Conv2d(8, 12, 3, padding=1, bias=False),
-            nn.Dropout(DROP),
-            nn.ReLU(),
-            nn.BatchNorm2d(12),
-            nn.Conv2d(12, 16, 3, padding=1, bias=False),
-            nn.Dropout(DROP),
-            nn.ReLU(),
-        )
-
-        self.oblock = nn.Sequential(
-            nn.BatchNorm2d(16),
-            nn.Conv2d(16, 10, 1),
-            nn.AdaptiveAvgPool2d(1),
-            nn.Flatten(),
-            nn.LogSoftmax(-1),
-        )
-
-    def forward(self, x):
-        x = self.cblock1(x)
-        x = self.tblock1(x)
-        x = self.cblock2(x)
-        x = self.tblock2(x)
-        x = self.cblock3(x)
-        x = self.oblock(x)
-        return x
-
-
-class Model7(BaseModel):
-    def __init__(self):
-        super(Model7, self).__init__()
-        DROP = 0.03
-        self.cblock1 = nn.Sequential(
-            nn.Conv2d(1, 8, 3, padding=1, bias=False),
-            nn.Dropout(DROP),
-            nn.ReLU(),
-            nn.BatchNorm2d(8),
-            nn.Conv2d(8, 10, 3, padding=1, bias=False),
-            nn.Dropout(DROP),
-            nn.ReLU(),
-        )
-
-        self.tblock1 = nn.Sequential(
-            nn.BatchNorm2d(10), nn.Conv2d(10, 8, 1), nn.ReLU(), nn.MaxPool2d(2, 2)
-        )
-
-        self.cblock2 = nn.Sequential(
-            nn.BatchNorm2d(8),
-            nn.Conv2d(8, 10, 3, padding=1, bias=False),
-            nn.Dropout(DROP),
-            nn.ReLU(),
             nn.BatchNorm2d(10),
-            nn.Conv2d(10, 14, 3, padding=1, bias=False),
+            nn.Conv2d(10, 16, 3, padding=1, bias=False),
+            nn.Dropout(DROP),
+            nn.ReLU(),
+            nn.BatchNorm2d(16),
+            nn.Conv2d(16, 16, 3, padding=1, bias=False),
             nn.Dropout(DROP),
             nn.ReLU(),
         )
 
-        self.tblock2 = nn.Sequential(
-            nn.BatchNorm2d(14), nn.Conv2d(14, 10, 1), nn.ReLU(), nn.MaxPool2d(2, 2)
-        )
+        self.tblock2 = nn.Sequential(nn.MaxPool2d(2, 2))
 
         self.cblock3 = nn.Sequential(
-            nn.BatchNorm2d(10),
-            nn.Conv2d(10, 14, 3, padding=1, bias=False),
-            nn.Dropout(DROP),
-            nn.ReLU(),
-            nn.BatchNorm2d(14),
-            nn.Conv2d(14, 22, 3, padding=1, bias=False),
+            nn.BatchNorm2d(16),
+            nn.Conv2d(16, 16, 3, padding=1, bias=False),
             nn.Dropout(DROP),
             nn.ReLU(),
         )
 
         self.oblock = nn.Sequential(
-            nn.BatchNorm2d(22),
-            nn.Conv2d(22, 20, 1),
+            nn.AdaptiveAvgPool2d(1),
+            nn.BatchNorm2d(16),
+            nn.Conv2d(16, 32, 1, bias=False),
             nn.Dropout(DROP),
             nn.ReLU(),
-            nn.BatchNorm2d(20),
-            nn.Conv2d(20, 10, 1),
-            nn.ReLU(),
-            nn.AdaptiveAvgPool2d(1),
+            nn.BatchNorm2d(32),
+            nn.Conv2d(32, 10, 1),
             nn.Flatten(),
             nn.LogSoftmax(-1),
         )
