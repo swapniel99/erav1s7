@@ -47,7 +47,7 @@
 
 ## Model 5:
 ### Target:
-    - Add Dropout Regularisation.
+    - Add Dropout of 1%.
 ### Results:
     - Model has 7979 parameters.
     - Train Accuracy = 99.23
@@ -68,7 +68,7 @@
 
 ## Model 7:
 ### Target:
-    - Add LR Scheduler.
+    - Add LR Scheduler ReduceLROnPlateau.
 ### Results:
     - Model has 7979 parameters.
     - Train Accuracy = 98.85
