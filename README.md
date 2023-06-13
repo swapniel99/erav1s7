@@ -55,6 +55,8 @@
 ### Analysis:
     - No longer overfitting. Infact it's the opposite.
 
+- Here Model changes are done. In next two files we will use Model5 itself for augmentation and LR changes.
+
 ## Model 6:
 ### Target:
     - Add image augmentations random rotation and random perspective.
