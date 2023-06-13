@@ -77,3 +77,18 @@
     - Test Accuracy = 99.44
 ### Analysis:
     - Target achieved: crossed 99.4% validation accuracy 3 times (epochs 11, 14 and 15)
+
+## Receptive Field Calculations
+|         | kernel | padding | stride | Jout | Nout | RF |
+|---------|--------|---------|--------|------|------|----|
+| input   |        |         |        | 1    | 28   | 1  |
+| conv    | 3      | 1       | 1      | 1    | 28   | 3  |
+| conv    | 3      | 1       | 1      | 1    | 28   | 5  |
+| maxpool | 2      | 0       | 2      | 2    | 14   | 6  |
+| conv    | 3      | 1       | 1      | 2    | 14   | 10 |
+| conv    | 3      | 1       | 1      | 2    | 14   | 14 |
+| maxpool | 2      | 0       | 2      | 4    | 7    | 16 |
+| conv    | 3      | 1       | 1      | 4    | 7    | 24 |
+| avgpool | 7      | 0       | 7      | 28   | 1    | 48 |
+| conv    | 1      | 0       | 1      | 28   | 1    | 48 |
+| conv    | 1      | 0       | 1      | 28   | 1    | 48 |
