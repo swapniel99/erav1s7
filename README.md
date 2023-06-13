@@ -43,7 +43,7 @@
     - Train Accuracy = 99.34
     - Test Accuracy = 99.24
 ### Analysis:
-    - Model has started overfitting again slightly as train and text accuracies are diverging.
+    - Model has started overfitting again slightly as train and test accuracies are diverging.
 
 ## Model 5:
 ### Target:
