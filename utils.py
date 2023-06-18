@@ -1,16 +1,13 @@
 import torch
 from tqdm import tqdm
 import matplotlib.pyplot as plt
+from collections import defaultdict
 
 train_losses = []
 test_losses = []
 train_acc = []
 test_acc = []
-test_incorrect_pred = {
-    "images": list(),
-    "ground_truths": list(),
-    "predicted_vals": list(),
-}
+test_incorrect_pred = defaultdict(list)
 
 
 def show_examples(train_loader, figsize=None):
@@ -66,10 +63,12 @@ def train(model, device, train_loader, optimizer, criterion):
 
 
 def test(model, device, test_loader, criterion):
+    global test_incorrect_pred
     model.eval()
 
     test_loss = 0
     correct = 0
+    test_incorrect_pred = defaultdict(list)
 
     with torch.no_grad():
         for batch_idx, (data, target) in enumerate(test_loader):
@@ -122,7 +121,7 @@ def GetInCorrectPreds(pPrediction, pLabels):
 
 
 def show_incorrect(figsize=None):
-    fig = plt.figure(figsize=figsize)
+    _ = plt.figure(figsize=figsize)
 
     for i in range(16):
         plt.subplot(4, 4, i + 1)
